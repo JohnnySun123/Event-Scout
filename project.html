@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Event Scout</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 500px;
+        max-width: 700px
+      }
+      /* Optional: Makes the sample page fill the window. */
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #origin-input,
+      #destination-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+      }
+
+      #origin-input:focus,
+      #destination-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #mode-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        margin-left: 12px;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #mode-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+    </style>
+  </head>
+  <body>
+  <!--
+    <input id="origin-input" class="controls" type="text"
+        placeholder="Enter an origin location">
+
+    <input id="destination-input" class="controls" type="text"
+        placeholder="Enter a destination location">
+
+    <div id="mode-selector" class="controls">
+      <input type="radio" name="type" id="changemode-walking" checked="checked">
+      <label for="changemode-walking">Walking</label>
+
+      <input type="radio" name="type" id="changemode-transit">
+      <label for="changemode-transit">Transit</label>
+
+      <input type="radio" name="type" id="changemode-driving">
+      <label for="changemode-driving">Driving</label>
+    </div>
+    -->
+    	<style>
+    		.sidechart 
+    		{
+    			border: 1px solid;
+    		}
+    		td,th{
+    			border: 1px solid;
+    		}
+    	}
+    		</style>
+    		<div style="width:300px;">
+	    	Search for events: <input id="eventname" type="text" name="search"><br>
+	    	<button onclick="celladding()"> Submit </button>
+    	</div>
+    	
+ <div style="width:1200px;">
+    	<div id="map" style="width:700px; float: left;"></div>
+    	
+    	<div style="width:500px; float: right;">
+    		<table class="sidechart" id="table1">
+    		<tr>
+    			<th>Event name</th>
+    			<th>Event Price ($)</th>
+    			<th>Traveling Cost ($)</th>
+    			<th>Total Cost ($)</th>
+    		</tr>
+    		
+    	</table>
+    	
+    	</div>
+</div> 
+
+<object width="300" height="300" type="text/plain" data="Data.txt" border="0" >
+</object>
+
+
+
+
+
+    	<script>
+    	function celladding()
+    	{
+	    	var table = document.getElementById("table1");
+	    	var row = table.insertRow(1);
+	    	var cell1 = row.insertCell(0);
+	    	var cell2 = row.insertCell(1);
+	    	var cell3 =row.insertCell(2);
+	    	var cell4=row.insertCell(3);
+	    	var originInput = document.getElementById('origin-input');
+	    	/*cell1.innerHTML = originInput.value;*/
+	    	var eventname = document.getElementById('eventname');
+	    	if(eventname!=null){
+	    		cell1.innerHTML=eventname.value;
+	    		cell2.innerHTML=String(50+Math.floor(Math.random()*101));
+	    		cell3.innerHTML=String(5+Math.floor(Math.random()*21));
+	    		cell2.value=Number(cell2.innerHTML); /**/
+	    		cell3.value=Number(cell3.innerHTML); /**/
+	    		cell4.innerHTML=cell2.value+cell3.value; /**/
+	    	}
+    	}
+    	function Search(){
+    		
+
+    	}
+    	</script>
+    	</div>
+
+</body>
+</html>
