@@ -57,6 +57,22 @@
       }
 
     </style>
+ 
+
+<style type="text/css">
+  html { 
+  background: url(city.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bg{background-color:#ff0000 !important;}
+</style>
+  
+
+
+
   </head>
   <body>
     	<style>
@@ -69,40 +85,63 @@
     		}
     	}
     		</style>
-    		<div style="width:300px;">
-	    	Search for events: <input id="eventname" type="text" name="search"><br>
-	    	<button onclick="celladding()"> Submit </button>
-
-	    	<input style="float: left" type='file' accept='text/plain' onchange='openFile(event)'><br>
-    </div>
+    		<div style="width:300px; font-family: impact;">
+	    	Search for events: <input id="eventname" type="text" name="search">
+        <br>
+	    	
+        <input style="font-family: impact; float: left" type='file' accept='text/plain'  onchange='openFile(event)'>
+        <br>
+        <input type="button" value=" Submit " style="font-family: impact;" onclick="Search_Result()"></input>
+        </div>
+    
     	</div> <br><br>   	
       
-
+<div>
     	<div style="display: inline-block;">
-      <div style="font-family: impact; font-size: 25pt;"">SEARCH RESULT</div> 
-      <div style="width:300px; height: 500px; overflow: scroll; border:1px solid black">
-    		<table class="sidechart" id="table1">
-   			<th>Event name</th>
-    		<th>Event Price ($)</th>
-    	</table>
-		</div>
+          <div style="font-family: impact; font-size: 25pt;"">SEARCH RESULT</div> 
+          <div style="width:300px; height: 500px; overflow: scroll; border:1px solid black;" background-image:url="white.jpg">
+    		    <table class="sidechart" id="table1" bgcolor="white">
+   			      <th>Event name</th>
+    		      <th>Event Price ($)</th> 
+            </table>
+      	  </div>
+      </div>
+    <div style="display: inline-block; width:30px"></div>
+    <div style="display: inline-block;">
+        <div style="font-family: impact; font-size: 25pt;"">LIST OF INTEREST</div>
+        <div style="width:300px; height: 500px; overflow-y: scroll; border:1px solid black;" background-image:url="white.jpg">
+          <table class="sidechart" id="table2" bgcolor="white">
+            <th>Event name</th>
+            <th>Event Price ($)</th>
+          </table>
+        </div>
+    </div>
 </div>
+<button style="font-family: impact;" onclick="Move_Table()">Add selected values into the list of interest</button>
 
-<div style="display: inline-block; width:30px"></div>
-<div style="display: inline-block;">
-<div style="font-family: impact; font-size: 25pt;"">LIST OF INTEREST</div>
-<div style="width:300px; height: 500px; overflow-y: scroll; border:1px solid black">
-        <table class="sidechart" id="table2">
-        <th>Event name</th>
-        <th>Event Price ($)</th>
-      </table>
-</div>
-<script>
-  ::-webkit-scrollbar {
-width: 0px;
-height: 0px;
+<script type="text/javascript">
+var intervalID = window.setInterval(addRowHandlers, 500); //repeat function
+function addRowHandlers() {
+    var table = document.getElementById("table1");
+    var rows = document.getElementById("table1").getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+
+        rows[i].onclick = function(){ return function(){
+            if(this.cells[0].innerHTML!="Event name"){
+               if(!Boolean(this.style.backgroundColor === "yellow")){
+               this.style.backgroundColor = "yellow";
+                }
+            else{
+              this.style.backgroundColor = "white";
+            }
+          }
+        };}(rows[i]);
+    }
 }
+window.onload=addRowHandlers();
 </script>
+
+
 
 <script>
 var text;
@@ -121,7 +160,7 @@ var text;
     </script>
     	<script>
     	var i=0;
-    	function celladding()
+    	function Search_Result()
     	{
 	    	var table = document.getElementById("table1");
 	    	
@@ -129,33 +168,50 @@ var text;
 	    	/*cell1.innerHTML = originInput.value;*/
 	    	var eventname = document.getElementById('eventname');
 	    	
-	    	for(var i=0; i<10000; i++){
-
-	    	if(eventname != null)
-	    	{
-	    			if(text[i].match( new RegExp(eventname.value, "i"))) //case insenstitive, regular expression is needed for 'match'
-	    			{
-              var row = table.insertRow(1);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-              //var cell3 =row.insertCell(2);
-              var price_index=text[i].search(/\d+/);
-              var name = text[i].substr(0, price_index);
-              var price = text[i].substr(price_index);
-	    			//table.insertRow(1).insertCell(0).innerHTML=name; //insert it into the table
-            cell1.innerHTML=name;
-            cell2.innerHTML=price;
-            //cell3.innerHTML="   ";
-	    			}
-	    	}
-    	}
-    	}
-    	function Search(){
-    		
-
+	    	for(var i=0; i<10000; i++)
+        {
+  	    	if(eventname != null)
+  	    	{
+  	    			if(text[i].match( new RegExp(eventname.value, "i"))) //case insenstitive, regular expression is needed for 'match'
+  	    			{
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                //var cell3 =row.insertCell(2);
+                var price_index=text[i].search(/\d+/);
+                var name = text[i].substr(0, price_index);
+                var price = text[i].substr(price_index);
+              cell1.innerHTML=name;
+              cell2.innerHTML=price;
+  	    			}
+  	    	}
+      	}
     	}
     	</script>
-    	</div>
+<script type="text/javascript">
+  function Move_Table()
+  {
+    var source_t = document.getElementById("table1");
+    var dest_t = document.getElementById("table2");
+    var source_rows = document.getElementById("table1").getElementsByTagName("tr");
+
+    for(var i=0; i<10000; i++)
+    {
+      if(Boolean(source_rows[i].style.backgroundColor === "yellow"))
+      {
+              var row=dest_t.insertRow(1);
+
+               row.insertCell(0).innerHTML=source_rows[i].cells[0].innerHTML;
+               row.insertCell(1).innerHTML=source_rows[i].cells[1].innerHTML;
+      }
+            else{
+            }
+    }
+}
+</script>
+
+
+
 
 </body>
 </html>
