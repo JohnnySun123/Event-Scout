@@ -1,106 +1,51 @@
-
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Event Scout</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
-    <meta charset="utf-8">
-
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 500px;
-        max-width: 700px
-      }
-      /* Optional: Makes the sample page fill the window. */
-      .controls {
-        margin-top: 10px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      #origin-input,
-      #destination-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 200px;
-      }
-
-      #origin-input:focus,
-      #destination-input:focus {
-        border-color: #4d90fe;
-      }
-
-      #mode-selector {
-        color: #fff;
-        background-color: #4d90fe;
-        margin-left: 12px;
-        padding: 5px 11px 0px 11px;
-      }
-
-      #mode-selector label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-    </style>
- 
-
+<head>
+<title>Event Scout</title>
+<div style="font-size: 48pt; text-align: top; display: inline-block; font-family: impact;">Event Scout</div>
+<br>
 <style type="text/css">
   html { 
-  background: url(city.jpg) no-repeat center center fixed; 
+  background: url() no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
-.bg{background-color:#ff0000 !important;}
 </style>
-  
-
-
-
   </head>
-  <body>
+  
     	<style>
     		.sidechart 
     		{
-    			border: 1px solid;
+          border-collapse: collapse;
+          border-color: black;
+          border-style: solid;
+          border-width: 5px;
     		}
     		td,th{
-    			border: 1px solid;
-    		}
+        border-color: black;
+          border-style: solid;
+          border-width: 5px;
+        }
     	}
     		</style>
-    		<div style="width:300px; font-family: impact;">
+    		<div style="width:270px; font-family: impact; display: inline-block;">
 	    	Search for events: <input id="eventname" type="text" name="search">
-        <br>
-	    	
-        <input style="font-family: impact; float: left" type='file' accept='text/plain'  onchange='openFile(event)'>
-        <br>
-        <input type="button" value=" Submit " style="font-family: impact;" onclick="Search_Result()"></input>
         </div>
-    
-    	</div> <br><br>   	
+        <div style="font-family: impact; display: inline-block;">
+        <input type="button" value=" Submit " style="font-family: impact; " onclick="Search_Result()"></input>
+        </div>
+        <br>
+        <input style="font-family: impact; display: inline-block;" type='file' accept='text/plain'  onchange='openFile(event)'>
+        <br> 	
+        <br>
       
 <div>
     	<div style="display: inline-block;">
-          <div style="font-family: impact; font-size: 25pt;"">SEARCH RESULT</div> 
+          <div style="font-family: impact; font-size: 25pt;">SEARCH RESULT</div> 
           <div style="width:300px; height: 500px; overflow: scroll; border:1px solid black;" background-image:url="white.jpg">
-    		    <table class="sidechart" id="table1" bgcolor="white">
+    		    <table style="font-family: impact;" class="sidechart" id="table1" bgcolor="white">
    			      <th>Event name</th>
     		      <th>Event Price ($)</th> 
             </table>
@@ -108,17 +53,32 @@
       </div>
     <div style="display: inline-block; width:30px"></div>
     <div style="display: inline-block;">
-        <div style="font-family: impact; font-size: 25pt;"">LIST OF INTEREST</div>
+        <div style="font-family: impact; font-size: 25pt;">LIST OF INTEREST</div>
         <div style="width:300px; height: 500px; overflow-y: scroll; border:1px solid black;" background-image:url="white.jpg">
-          <table class="sidechart" id="table2" bgcolor="white">
+          <table style="font-family: impact;" class="sidechart" id="table2" bgcolor="white">
             <th>Event name</th>
             <th>Event Price ($)</th>
           </table>
         </div>
     </div>
+    <div style="display: inline-block;">
+          <img id="arrow" src="ARROW.png" style="position:absolute; height:50px; width:100px; left:590px; top:215px; visibility: hidden">
+          <text id="TADA_Message" style="font-family: impact; font-size: 25pt; position:absolute; left:700px; top:220px; visibility: hidden">
+          TADA! The highlighted row is the cheapest price!!</text>
+          <img id="tada" src="SB_RD.jpg" alt="Sponge Bob" width="500" height="300" style="position:absolute;left:700px; top:310px; visibility: hidden">
+    </div>
 </div>
-<button style="font-family: impact;" onclick="Move_Table()">Add selected values into the list of interest</button>
-
+<div>
+  <div style="display: inline-block;">
+      <button style="font-family: impact;" onclick="Move_Table()">Add selected events</button>
+      <button style="font-family: impact;" onclick="Select_All()">Select All</button>
+      <button style="font-family: impact;" onclick="Reset()">Clear Selected</button>
+  </div>
+  <div style="display: inline-block;">&ensp; &nbsp; &nbsp;</div>
+  <div style="display: inline-block;">
+      <button style="font-family: impact;" onclick="Print()">SORT</button>
+  </div>
+</div>
 <script type="text/javascript">
 var intervalID = window.setInterval(addRowHandlers, 500); //repeat function
 function addRowHandlers() {
@@ -188,28 +148,207 @@ var text;
       	}
     	}
     	</script>
-<script type="text/javascript">
+<script>
   function Move_Table()
   {
     var source_t = document.getElementById("table1");
     var dest_t = document.getElementById("table2");
     var source_rows = document.getElementById("table1").getElementsByTagName("tr");
-
-    for(var i=0; i<10000; i++)
+    var dest_rows= document.getElementById("table2").getElementsByTagName("tr");
+    for(var i=0; i<source_rows.length; i++)
     {
       if(Boolean(source_rows[i].style.backgroundColor === "yellow"))
       {
               var row=dest_t.insertRow(1);
-
                row.insertCell(0).innerHTML=source_rows[i].cells[0].innerHTML;
                row.insertCell(1).innerHTML=source_rows[i].cells[1].innerHTML;
+               source_rows[i].style.backgroundColor="white"; //reset the selected to prevent duplicates        
       }
             else{
             }
     }
+     for(var i=0; i<dest_rows.length; i++)
+    {
+    dest_rows[i].style.backgroundColor="white";//reset colorway of 
+  }
+}
+</script>
+<script>
+function Select_All()
+{
+var table = document.getElementById("table1");
+var table_rows = document.getElementById("table1").getElementsByTagName("tr");
+for(var i=0; i<table_rows.length; i++)
+    {
+      if(table_rows[i].cells[0].innerHTML!="Event name")
+      {
+       table_rows[i].style.backgroundColor="yellow"; 
+      }
+      else
+      {
+
+      }
+    }
+}
+</script>
+<script>
+function Reset(){
+var table = document.getElementById("table1");
+var table_rows = document.getElementById("table1").getElementsByTagName("tr");
+for(var i=0; i<table_rows.length; i++)
+    {
+      if(table_rows[i].cells[0].innerHTML!="Event name")
+      {
+       table_rows[i].style.backgroundColor="white"; 
+      }
+      else
+      {
+
+      }
+    }
 }
 </script>
 
+<script>
+//var repeat_Preparse = window.setInterval(Pre_Parse, 500); //repeat function
+var data = { events: [] }
+  function Pre_Parse()
+  {
+    var list_t = document.getElementById("table2");
+    var list_rows = document.getElementById("table2").getElementsByTagName("tr");
+    //console.log(list_rows.length);
+    for(var i=0; i<list_rows.length; i++)
+    {
+      if(list_rows[i].cells[0].innerHTML!="Event name")
+      {
+        data.events.push({name: list_rows[i].cells[0].innerHTML, price: Number(list_rows[i].cells[1].innerHTML)});
+      }
+    }
+     console.log(data.events.length);
+     console.log(data.events);
+  }
+  
+var A_array=[];
+
+function Print(){
+  Pre_Parse();
+  data.events.sort(SortByPrice);
+  Putback();
+}
+
+function SortByPrice(x,y) {
+      return x.price - y.price; 
+    }
+
+function Putback()
+{
+  var dest_t = document.getElementById("table2");
+  var dest_rows = document.getElementById("table2").getElementsByTagName("tr");
+ 
+    for(var j=1; j<data.events.length+1; j++)
+    {
+        dest_rows[j].cells[1].innerHTML= data.events[j-1].price;
+        dest_rows[j].cells[0].innerHTML=data.events[j-1].name;
+        //dest_rows[1].style.backgroundColor="red";
+         //cheapest will be on top
+     }
+    data.events.length=0;
+    dest_rows[1].style.backgroundColor="red";
+    
+}
+ 
+var repeat_ImageShow = window.setInterval(ShowImage, 100); //repeat function
+
+function ShowImage()
+{
+    var dest_rows = document.getElementById("table2").getElementsByTagName("tr");
+    var img = document.getElementById("tada");
+    var msg = document.getElementById("TADA_Message");
+    var arrow = document.getElementById("arrow");
+    if(dest_rows[1].style.backgroundColor==="red")
+    {  
+        img.style.visibility = 'visible';
+        msg.style.visibility = 'visible';
+        arrow.style.visibility = 'visible';
+    }
+    else
+    {
+        img.style.visibility = 'hidden';
+        msg.style.visibility = 'hidden';
+        arrow.style.visibility = 'hidden';
+    }
+}
+
+function mergeSort(arr)
+{
+    if (arr.length < 2)
+        return arr; 
+
+    var middle = parseInt(arr.length / 2);
+    var left   = arr.slice(0, middle);
+    var right  = arr.slice(middle, arr.length);
+
+    return merge(mergeSort(left), mergeSort(right));
+
+}
+
+function merge(left, right)
+{
+    var result = [];
+ 
+    while (left.length && right.length) {
+        if (left[0] <= right[0]) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+    while (left.length)
+    {
+        result.push(left.shift());
+    }
+    while (right.length)
+    {
+        result.push(right.shift());
+    }
+    return result;
+}
+</script>
+
+<script>
+var Highlighter = window.setInterval(Hover, 500);
+ function Hover()
+ {
+var table = document.getElementById("table1");
+var table_rows = document.getElementById("table1").getElementsByTagName("tr");
+for(var i=0; i<table_rows.length; i++)
+    {
+      if(table_rows[i].cells[0].innerHTML!="Event name")
+      {
+
+          table_rows[i].onmouseenter= function(){return function()
+            {
+              if(!Boolean(this.style.backgroundColor === "yellow"))
+              {
+                this.style.backgroundColor="#f7f785";
+              } 
+            };
+          }(table_rows[i]);
+          table_rows[i].onmouseleave= function(){return function(){
+            if(!Boolean(this.style.backgroundColor === "yellow"))
+              {
+            this.style.backgroundColor="white";
+          } };
+        }(table_rows[i]);
+      }
+      else
+      {
+
+      }
+    }
+ }
+
+</script>
 
 
 
