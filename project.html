@@ -211,8 +211,8 @@ for(var i=0; i<table_rows.length; i++)
 </script>
 
 <script>
-//var repeat_Preparse = window.setInterval(Pre_Parse, 500); //repeat function
-var data = { events: [] }
+//var repeat_Preparse = window.setInterval(Pre_Parse, 500); //repeat function **This one no longer works due to the "push" cant have it running in the background anymore
+var data = { events: [] } //JSON opbject
   function Pre_Parse()
   {
     var list_t = document.getElementById("table2");
@@ -225,8 +225,8 @@ var data = { events: [] }
         data.events.push({name: list_rows[i].cells[0].innerHTML, price: Number(list_rows[i].cells[1].innerHTML)});
       }
     }
-     console.log(data.events.length);
-     console.log(data.events);
+     console.log(data.events.length); //for debugging purpose
+     console.log(data.events); //for debugging purpose
   }
   
 var A_array=[];
@@ -238,7 +238,7 @@ function Print(){
 }
 
 function SortByPrice(x,y) {
-      return x.price - y.price; 
+      return x.price - y.price; //insertion sort
     }
 
 function Putback()
